@@ -1,0 +1,22 @@
+{
+  "name": "promptvault",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.ts --network sepolia",
+    "test": "npx hardhat test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.2",
+    "hardhat": "^2.22.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@cofhe/hardhat-plugin": "^0.4.0",
+    "@cofhe/sdk": "0.4.0",
+    "@fhenixprotocol/cofhe-contracts": "0.1.0",
+    "dotenv": "^17.3.1"
+  }
+}
