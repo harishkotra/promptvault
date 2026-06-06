@@ -7,7 +7,6 @@ import { NavBar } from "@/components/NavBar";
 import { ConnectWallet } from "@/components/ConnectWallet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -15,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -25,7 +23,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, CheckCircle, Sparkles } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import MDEditor from "@uiw/react-md-editor";
 
 const CATEGORIES = [
   "Creative Writing",
@@ -115,24 +113,24 @@ export default function ListPage() {
   return (
     <div className="min-h-screen bg-background">
       <NavBar />
-      <main className="max-w-2xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight">List a Prompt</h1>
-          <p className="text-muted-foreground text-sm mt-1">
+      <main className="max-w-2xl mx-auto px-4 py-12">
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold tracking-tight">List a Prompt</h1>
+          <p className="text-muted-foreground mt-2">
             Your prompt will be encrypted with AES-256-GCM and stored on IPFS.
             The encryption key is split and stored on-chain via FHE.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-10">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Details</CardTitle>
+              <CardTitle className="text-lg">Details</CardTitle>
               <CardDescription>
                 Basic information about your prompt listing.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-5">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Title</label>
                 <Input
@@ -140,6 +138,7 @@ export default function ListPage() {
                   onChange={(e) => setTitle(e.target.value)}
                   required
                   placeholder="e.g. Expert React Developer Assistant"
+                  className="h-10"
                 />
               </div>
 
@@ -172,6 +171,7 @@ export default function ListPage() {
                   onChange={(e) => handlePriceChange(e.target.value)}
                   required
                   placeholder="0.01"
+                  className="h-10"
                 />
               </div>
 
@@ -186,6 +186,7 @@ export default function ListPage() {
                   value={metadataURI}
                   onChange={(e) => setMetadataURI(e.target.value)}
                   placeholder="https://..."
+                  className="h-10"
                 />
               </div>
             </CardContent>
@@ -193,44 +194,22 @@ export default function ListPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Prompt Content</CardTitle>
+              <CardTitle className="text-lg">Prompt Content</CardTitle>
               <CardDescription>
-                Write your prompt in Markdown. Buyers will see it rendered after
-                purchase.
+                Write your prompt using Markdown. Buyers will see it rendered
+                after purchase.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <Tabs defaultValue="write" className="w-full">
-                <TabsList className="w-full">
-                  <TabsTrigger value="write" className="flex-1">
-                    Write
-                  </TabsTrigger>
-                  <TabsTrigger value="preview" className="flex-1">
-                    Preview
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="write" className="mt-2">
-                  <Textarea
-                    value={promptText}
-                    onChange={(e) => setPromptText(e.target.value)}
-                    required
-                    rows={14}
-                    placeholder="Write your prompt using Markdown..."
-                    className="font-mono text-sm resize-y min-h-[280px]"
-                  />
-                </TabsContent>
-                <TabsContent value="preview" className="mt-2">
-                  <div className="min-h-[280px] p-4 rounded-md border prose prose-sm dark:prose-invert max-w-none">
-                    {promptText ? (
-                      <ReactMarkdown>{promptText}</ReactMarkdown>
-                    ) : (
-                      <p className="text-muted-foreground">
-                        Nothing to preview yet.
-                      </p>
-                    )}
-                  </div>
-                </TabsContent>
-              </Tabs>
+            <CardContent>
+              <div data-color-mode="light">
+                <MDEditor
+                  value={promptText}
+                  onChange={(val) => setPromptText(val || "")}
+                  preview="live"
+                  height={420}
+                  visibleDragbar={false}
+                />
+              </div>
             </CardContent>
           </Card>
 
@@ -243,12 +222,11 @@ export default function ListPage() {
           <Button
             type="submit"
             disabled={isPending}
-            className="w-full gap-2"
-            size="lg"
+            className="w-full gap-2 h-12 text-base"
           >
             {isPending ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-5 w-5 animate-spin" />
                 Encrypting & Listing...
               </>
             ) : (
