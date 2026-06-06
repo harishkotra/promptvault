@@ -7,6 +7,17 @@ verification — every prompt is encrypted end-to-end and the key is gated
 by the Sepolia blockchain. No one, not even the platform, can read a
 prompt's content before a verified wallet buys it.
 
+
+### Screenshots
+
+<img width="4015" height="9794" alt="screencapture-localhost-3001-2026-06-06-18_44_27" src="https://github.com/user-attachments/assets/52c8efd6-c099-4e67-8ab0-68c421d09209" />
+<img width="4015" height="3173" alt="screencapture-localhost-3001-list-2026-06-06-19_12_00" src="https://github.com/user-attachments/assets/a8cddcbd-955a-4d38-91e7-89a58aac0372" />
+<img width="3258" height="2395" alt="screencapture-localhost-3001-list-2026-06-06-19_12_29" src="https://github.com/user-attachments/assets/cfa832b9-1f98-45d3-b996-743945359599" />
+<img width="4015" height="2395" alt="screencapture-localhost-3001-listing-1-2026-06-06-19_13_07" src="https://github.com/user-attachments/assets/6909b1f2-4ffe-4148-8a05-60bd7ec7ddf4" />
+<img width="1987" height="1159" alt="Screenshot at Jun 06 19-13-57" src="https://github.com/user-attachments/assets/e2dc6ab6-8fe7-4db9-9f92-f2655b1f5164" />
+<img width="1993" height="1192" alt="Screenshot at Jun 06 19-14-39" src="https://github.com/user-attachments/assets/665ac37c-8b2f-4f7c-b684-4968146a129e" />
+
+
 ---
 
 ## Why FHE?
@@ -432,7 +443,3 @@ and edge cases.
 - [Wagmi](https://wagmi.sh/) — Ethereum hooks for React
 - [shadcn/ui](https://ui.shadcn.com/) — Component library
 - [Pinata](https://pinata.cloud/) — IPFS pinning service
-
----
-
-Built by [Harish Kotra](https://dailybuilds.xyz).
