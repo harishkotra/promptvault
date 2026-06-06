@@ -12,7 +12,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Wallet, LogOut, ChevronDown, Coins } from "lucide-react";
 
 export function ConnectWallet() {
@@ -28,11 +27,9 @@ export function ConnectWallet() {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center gap-2 rounded-lg border border-input bg-background px-3 py-1.5 text-sm hover:bg-muted transition-colors outline-none">
-          <Avatar className="h-5 w-5">
-            <AvatarFallback className="text-xs bg-primary/10 text-primary">
-              {address.slice(2, 4).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-medium text-primary">
+            {address.slice(2, 4).toUpperCase()}
+          </span>
           <span>
             {address.slice(0, 6)}...{address.slice(-4)}
           </span>

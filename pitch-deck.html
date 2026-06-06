@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromptVault — Pitch Deck</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:         #0a0a0f;
+      --surface:    #11111a;
+      --surface2:   #18182a;
+      --border:     #2a2a40;
+      --accent:     #7c3aed;
+      --accent2:    #06b6d4;
+      --accent3:    #10b981;
+      --text:       #e8e8f0;
+      --muted:      #8888aa;
+      --gold:       #f59e0b;
+    }
+
+    html { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+
+    /* ── Slide container ── */
+    .slide {
+      width: 1280px;
+      min-height: 720px;
+      margin: 0 auto 2px;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      page-break-after: always;
+    }
+
+    /* Print: each slide = one PDF page */
+    @media print {
+      body { background: #000; }
+      .slide {
+        width: 297mm;
+        height: 167mm;
+        min-height: unset;
+        margin: 0;
+        page-break-after: always;
+        break-after: page;
+      }
+    }
+
+    /* ── Shared typography ── */
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+    }
+    h1 { font-size: 64px; font-weight: 900; line-height: 1.05; }
+    h2 { font-size: 42px; font-weight: 800; line-height: 1.1; }
+    h3 { font-size: 24px; font-weight: 700; }
+    h4 { font-size: 16px; font-weight: 600; }
+    p  { line-height: 1.65; color: var(--muted); }
+
+    .accent  { color: var(--accent); }
+    .accent2 { color: var(--accent2); }
+    .accent3 { color: var(--accent3); }
+    .gold    { color: var(--gold); }
+    .white   { color: var(--text); }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: rgba(124,58,237,0.15);
+      color: #c4b5fd;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+    }
+
+    /* ── Background decorations ── */
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+
+    /* ── Slide number ── */
+    .slide-num {
+      position: absolute;
+      bottom: 28px;
+      right: 40px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Brand mark ── */
+    .brand-mark {
+      position: absolute;
+      top: 28px;
+      left: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-mark .logo-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .brand-mark .logo-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .card-sm {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pill-purple { background: rgba(124,58,237,0.2); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.4); }
+    .pill-cyan   { background: rgba(6,182,212,0.15); color: #67e8f9; border: 1px solid rgba(6,182,212,0.35); }
+    .pill-green  { background: rgba(16,185,129,0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.35); }
+    .pill-gold   { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.35); }
+
+    /* ─────────────────────────────────────────────────
+       SLIDE 1 — COVER
+    ───────────────────────────────────────────────── */
+    #s1 {
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 80px 60px;
+    }
+    #s1 .glow-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,0.35) 0%, transparent 70%);
+      top: -200px; right: -100px;
+    }
+    #s1 .glow-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%);
+      bottom: -100px; left: 200px;
+    }
+    #s1 .tagline {
+      font-size: 20px;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 16px;
+      max-width: 560px;
+    }
+    #s1 .pills { display: flex; gap: 10px; margin-top: 32px; flex-wrap: wrap; }
+    #s1 .built-by {
+      position: absolute;
+      bottom: 40px;
+      left: 80px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    #s1 .built-by span { color: var(--text); font-weight: 600; }
+    #s1 .contract-badge {
+      position: absolute;
+      bottom: 40px;
+      right: 80px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    #s1 .contract-badge span { color: var(--accent2); }
+
+    /* ─────────────────────────────────────────────────
+       SLIDE 2 — THE PROBLEM
+    ───────────────────────────────────────────────── */
+    #s2 { padding: 60px 80px; }
+    #s2 .body { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; flex: 1; }
+    #s2 .problem-list { display: flex; flex-direction: column; gap: 16px; }
+    #s2 .problem-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 18px 20px;
+      background: rgba(239,68,68,0.07);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 12px;
+    }
+    #s2 .problem-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    #s2 .problem-text h4 { color: #fca5a5; font-size: 14px; margin-bottom: 4px; }
+    #s2 .problem-text p  { font-size: 13px; }
+    #s2 .market-box {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    #s2 .stat-card {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+    }
+    #s2 .stat-num { font-size: 40px; font-weight: 900; }
+    #s2 .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* ─────────────────────────────────────────────────
+       SLIDE 3 — THE SOLUTION
+    ───────────────────────────────────────────────── */
+    #s3 { padding: 60px 80px; }
+    #s3 .glow-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%);
+      top: -150px; right: -100px;
+    }
+    #s3 .body { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 32px; align-items: start; }
+    #s3 .steps { display: flex; flex-direction: column; gap: 0; }
+    #s3 .step {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    #s3 .step:last-child { border-bottom: none; }
+    #s3 .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    #s3 .step-body h4 { color: var(--text); font-size: 15px; margin-bottom: 4px; }
+    #s3 .step-body p  { font-size: 13px; }
+    #s3 .usp-box {
+      background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.1));
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    #s3 .usp-box h3 { font-size: 18px; margin-bottom: 16px; color: var(--text); }
+    #s3 .usp-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 13px;
+    }
+    #s3 .usp-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ─────────────────────────────────────────────────
+       SLIDE 4 — FHE DEEP DIVE
+    ───────────────────────────────────────────────── */
+    #s4 { padding: 60px 80px; }
+    #s4 .glow-1 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
+      bottom: -100px; right: 0;
+    }
+    #s4 .body { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+    #s4 .col { display: flex; flex-direction: column; gap: 20px; }
+
+    .fhe-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(124,58,237,0.25);
+      border: 1px solid rgba(124,58,237,0.5);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #c4b5fd;
+      margin-bottom: 6px;
+    }
+
+    .code-block {
+      background: #0d0d1a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      line-height: 1.8;
+      color: #94a3b8;
+    }
+    .code-block .kw  { color: #c4b5fd; }
+    .code-block .fn  { color: #67e8f9; }
+    .code-block .str { color: #6ee7b7; }
+    .code-block .cm  { color: #4b5680; }
+    .code-block .hl  { color: var(--text); }
+
+    #s4 .feature-list { display: flex; flex-direction: column; gap: 14px; }
+    #s4 .feature {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    #s4 .feature-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    #s4 .feature h4 { font-size: 13px; color: var(--text); margin-bottom: 3px; }
+    #s4 .feature p  { font-size: 12px; }
+
+    /* ─────────────────────────────────────────────────
+       SLIDE 5 — ARCHITECTURE
+    ───────────────────────────────────────────────── */
+    #s5 { padding: 50px 80px; }
+    #s5 .arch-diagram {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: center;
+    }
+    #s5 .layer {
+      width: 100%;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      padding: 16px 0;
+      position: relative;
+    }
+    #s5 .layer-label {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      width: 70px;
+    }
+    #s5 .layer-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    #s5 .arch-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      text-align: center;
+      min-width: 140px;
+    }
+    #s5 .arch-box .ab-icon { font-size: 20px; margin-bottom: 6px; }
+    #s5 .arch-box .ab-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    #s5 .arch-box .ab-sub  { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    #s5 .arch-box.highlight { border-color: rgba(124,58,237,0.5); background: rgba(124,58,237,0.1); }
+    #s5 .arch-box.highlight2 { border-color: rgba(6,182,212,0.4); background: rgba(6,182,212,0.08); }
+
+    #s5 .arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 18px;
+      width: 32px;
+    }
+
+    #s5 .hybrid-table {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    #s5 .ht-cell {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    #s5 .ht-cell .ht-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    #s5 .ht-cell .ht-val   { font-size: 14px; font-weight: 700; color: var(--text); }
+    #s5 .ht-cell .ht-sub   { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    /* ─────────────────────────────────────────────────
+       SLIDE 6 — HOW FHE ENABLES THE USP
+    ───────────────────────────────────────────────── */
+    #s6 { padding: 60px 80px; }
+    #s6 .glow-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
+      bottom: -150px; left: -100px;
+    }
+    #s6 .body { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+    #s6 .compare-col h3 { font-size: 16px; margin-bottom: 16px; }
+    #s6 .compare-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    #s6 .bad  { background: rgba(239,68,68,0.07);  border: 1px solid rgba(239,68,68,0.2);  }
+    #s6 .good { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); }
+    #s6 .ci-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    #s6 .ci-text h4 { font-size: 13px; margin-bottom: 2px; }
+    #s6 .ci-text h4.red   { color: #fca5a5; }
+    #s6 .ci-text h4.green { color: #6ee7b7; }
+    #s6 .ci-text p  { font-size: 12px; }
+
+    #s6 .insight-box {
+      margin-top: 28px;
+      padding: 22px 28px;
+      background: linear-gradient(90deg, rgba(124,58,237,0.12), rgba(6,182,212,0.08));
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 14px;
+      grid-column: 1 / -1;
+    }
+    #s6 .insight-box p { font-size: 16px; color: var(--text); line-height: 1.6; }
+    #s6 .insight-box .highlight-quote { color: #c4b5fd; font-weight: 600; }
+
+    /* ─────────────────────────────────────────────────
+       SLIDE 7 — TECH STACK & METRICS
+    ───────────────────────────────────────────────── */
+    #s7 { padding: 60px 80px; }
+    #s7 .body { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+    #s7 .stack-list { display: flex; flex-direction: column; gap: 10px; }
+    #s7 .stack-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    #s7 .stack-icon { font-size: 18px; width: 28px; text-align: center; }
+    #s7 .stack-info { flex: 1; }
+    #s7 .stack-info h4 { font-size: 13px; color: var(--text); }
+    #s7 .stack-info p  { font-size: 11px; }
+    #s7 .stack-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--accent2);
+      background: rgba(6,182,212,0.12);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    #s7 .metrics-col { display: flex; flex-direction: column; gap: 14px; }
+    #s7 .metric-card {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    #s7 .metric-icon { font-size: 24px; }
+    #s7 .metric-val  { font-size: 28px; font-weight: 900; }
+    #s7 .metric-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ─────────────────────────────────────────────────
+       SLIDE 8 — CLOSING
+    ───────────────────────────────────────────────── */
+    #s8 {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px;
+    }
+    #s8 .glow-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 65%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #s8 .content { position: relative; z-index: 1; }
+    #s8 .big-logo {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      margin: 0 auto 28px;
+    }
+    #s8 h2 { font-size: 52px; margin-bottom: 16px; }
+    #s8 .sub { font-size: 18px; color: var(--muted); max-width: 600px; margin: 0 auto 40px; }
+    #s8 .links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+    #s8 .link-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 13px;
+    }
+    #s8 .link-item .li-icon { font-size: 16px; }
+    #s8 .link-item .li-label { color: var(--muted); font-size: 11px; margin-top: 1px; }
+    #s8 .by { margin-top: 48px; font-size: 14px; color: var(--muted); }
+    #s8 .by span { color: var(--text); font-weight: 600; }
+
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1 — COVER
+═══════════════════════════════════════════════ -->
+<section class="slide" id="s1">
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="grid-bg" style="opacity:0.5;"></div>
+
+  <div class="brand-mark">
+    <div class="logo-icon">🔐</div>
+    <div class="logo-text">PromptVault</div>
+  </div>
+
+  <div style="position:relative; z-index:1; margin-top: 60px;">
+    <div class="eyebrow" style="margin-bottom:20px;">Hackathon Submission · FHE Track · Sepolia Testnet</div>
+    <h1 style="max-width:680px;">
+      The First<br/>
+      <span class="accent">Trustless</span> AI<br/>
+      Prompt Market
+    </h1>
+    <p class="tagline">
+      Buy and sell AI prompts where the content is <strong style="color:var(--text)">mathematically
+      invisible</strong> until payment — enforced by Fully Homomorphic Encryption on-chain, not by promises.
+    </p>
+    <div class="pills">
+      <span class="pill pill-purple">🔐 FHE · CoFHE v0.4</span>
+      <span class="pill pill-cyan">⛓️ Sepolia Testnet</span>
+      <span class="pill pill-green">🔑 AES-256-GCM</span>
+      <span class="pill pill-gold">📦 IPFS · Pinata</span>
+    </div>
+  </div>
+
+  <div class="built-by">Built by <span>Harish Kotra</span> — dailybuilds.xyz</div>
+  <div class="contract-badge">
+    Contract: <span>0xc369bd84...F5DA3</span><br/>
+    <span style="color:var(--muted);">Sepolia Etherscan</span>
+  </div>
+  <div class="slide-num">01 / 08</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2 — THE PROBLEM
+═══════════════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="grid-bg" style="opacity:0.3;"></div>
+  <div class="brand-mark">
+    <div class="logo-icon">🔐</div>
+    <div class="logo-text">PromptVault</div>
+  </div>
+
+  <div class="eyebrow" style="margin-top:60px;">The Problem</div>
+  <h2 style="margin-top:10px;">AI Prompts Are <span style="color:#f87171;">Impossible</span><br/>to Sell Safely Today</h2>
+
+  <div class="body">
+    <div class="problem-list">
+      <div class="problem-item">
+        <div class="problem-icon">👁️</div>
+        <div class="problem-text">
+          <h4>Platform Can Always Peek</h4>
+          <p>Every existing marketplace (PromptBase, etc.) stores prompts in plaintext on their servers. The operator has full read access to every prompt sold.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-icon">🤝</div>
+        <div class="problem-text">
+          <h4>Commit-Reveal Requires Trust</h4>
+          <p>Crypto alternatives use "encrypt-then-reveal" — the seller manually sends a key after payment. Nothing stops them from sending garbage or ghosting.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-icon">🔓</div>
+        <div class="problem-text">
+          <h4>Key Exposure on Purchase</h4>
+          <p>When a key is delivered via API or event log, it passes through infrastructure that can log it — defeating the purpose of encryption.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="market-box">
+      <div class="stat-card">
+        <div class="stat-num gold">$1B+</div>
+        <div class="stat-label">Prompt engineering market projected by 2028</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num accent2">0</div>
+        <div class="stat-label">Existing platforms with cryptographic access control</div>
+      </div>
+      <div class="stat-card" style="background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.3);">
+        <div class="stat-num accent">FHE</div>
+        <div class="stat-label">The only technology that solves all three problems simultaneously</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">02 / 08</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3 — THE SOLUTION
+═══════════════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="glow glow-1"></div>
+  <div class="grid-bg" style="opacity:0.25;"></div>
+  <div class="brand-mark">
+    <div class="logo-icon">🔐</div>
+    <div class="logo-text">PromptVault</div>
+  </div>
+
+  <div class="eyebrow" style="margin-top:60px;">The Solution</div>
+  <h2 style="margin-top:10px;">Mathematics Replaces <span class="accent">Trust</span></h2>
+
+  <div class="body">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Creator Encrypts Locally</h4>
+          <p>Browser generates an AES-256 key via Web Crypto API. Prompt text is encrypted to ciphertext, uploaded to IPFS. The key <em>never</em> leaves the browser unencrypted.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Key is FHE-Encrypted On-Chain</h4>
+          <p>The 256-bit AES key is split into two 128-bit halves. Each half is encrypted by the CoFHE SDK to an <code>InEuint128</code> with a ZK proof of well-formedness. Stored on Sepolia as <code>euint128</code> ciphertexts.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Purchase Atomically Grants Access</h4>
+          <p>One transaction: pay ETH → contract verifies → calls <code>FHE.allow(keyHandle, buyer)</code>. The ACL update and payment are inseparable. No trusted third party involved.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Buyer Decrypts in Browser</h4>
+          <p>CoFHE SDK decrypts both key halves using buyer's wallet. Keys are concatenated, IPFS ciphertext is downloaded, AES-GCM decrypts plaintext. Secret material never touches a server.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="usp-box">
+      <div class="fhe-tag" style="margin-bottom:14px;">CORE USP</div>
+      <h3>The AES key never exists in plaintext anywhere except the buyer's browser</h3>
+
+      <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
+        <div class="usp-point">
+          <div class="usp-icon">🚫</div>
+          <div><strong style="color:var(--text);">Not on-chain</strong> — only <code>euint128</code> ciphertexts stored</div>
+        </div>
+        <div class="usp-point">
+          <div class="usp-icon">🚫</div>
+          <div><strong style="color:var(--text);">Not in any API</strong> — no server decrypts or relays</div>
+        </div>
+        <div class="usp-point">
+          <div class="usp-icon">🚫</div>
+          <div><strong style="color:var(--text);">Not in event logs</strong> — key handles are opaque ciphertexts</div>
+        </div>
+        <div class="usp-point">
+          <div class="usp-icon">🚫</div>
+          <div><strong style="color:var(--text);">Not in localStorage</strong> — ephemeral <code>CryptoKey</code> object only</div>
+        </div>
+        <div class="usp-point">
+          <div class="usp-icon">✅</div>
+          <div><strong style="color:#6ee7b7;">Only in the authorised buyer's active session</strong> — mathematically enforced, not promised</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">03 / 08</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4 — FHE DEEP DIVE
+═══════════════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="glow glow-1"></div>
+  <div class="grid-bg" style="opacity:0.25;"></div>
+  <div class="brand-mark">
+    <div class="logo-icon">🔐</div>
+    <div class="logo-text">PromptVault</div>
+  </div>
+
+  <div class="eyebrow" style="margin-top:60px;">FHE in Code</div>
+  <h2 style="margin-top:10px;">Four <span class="accent2">FHE Primitives</span><br/>Power the Entire Security Model</h2>
+
+  <div class="body">
+    <div class="col">
+      <div class="code-block">
+<span class="cm">// ─── LISTING: Creator uploads key halves ───</span>
+<span class="kw">function</span> <span class="fn">listPrompt</span>(
+  <span class="hl">InEuint128</span> calldata encryptedKey0,
+  <span class="hl">InEuint128</span> calldata encryptedKey1,
+  <span class="cm">// ... title, category, CID, price</span>
+) external {
+  <span class="cm">// 1. Verify ZK proof — ciphertext is well-formed</span>
+  <span class="hl">euint128</span> kp0 = <span class="fn">FHE.asEuint128</span>(encryptedKey0);
+  <span class="hl">euint128</span> kp1 = <span class="fn">FHE.asEuint128</span>(encryptedKey1);
+
+  <span class="cm">// 2. Contract retains persistent ACL access</span>
+  <span class="cm">//    (required to re-grant on future purchases)</span>
+  <span class="fn">FHE.allowThis</span>(kp0);  <span class="fn">FHE.allowThis</span>(kp1);
+
+  <span class="cm">// 3. Creator can verify their own listing</span>
+  <span class="fn">FHE.allowSender</span>(kp0); <span class="fn">FHE.allowSender</span>(kp1);
+
+  l.keyPart0 = kp0;  l.keyPart1 = kp1;
+}
+
+<span class="cm">// ─── PURCHASE: Atomic payment + key grant ──</span>
+<span class="kw">function</span> <span class="fn">purchasePrompt</span>(<span class="hl">uint256</span> listingId) payable {
+  <span class="cm">// ... payment validation ...</span>
+
+  <span class="cm">// 4. Permanent, irrevocable ACL grant</span>
+  <span class="fn">FHE.allow</span>(l.keyPart0, msg.sender);
+  <span class="fn">FHE.allow</span>(l.keyPart1, msg.sender);
+}
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="feature-list">
+        <div class="feature">
+          <div class="feature-icon" style="background:rgba(124,58,237,0.2);">🧮</div>
+          <div>
+            <div class="fhe-tag">FHE.asEuint128()</div>
+            <h4>ZK-Proof Validated Encryption</h4>
+            <p style="font-size:12px;">Accepts <code>InEuint128</code> — a client-encrypted ciphertext bundled with a zero-knowledge proof that proves correctness without revealing the value.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" style="background:rgba(6,182,212,0.15);">🔗</div>
+          <div>
+            <div class="fhe-tag" style="background:rgba(6,182,212,0.2);border-color:rgba(6,182,212,0.5);color:#67e8f9;">FHE.allowThis()</div>
+            <h4>Contract-Persistent ACL</h4>
+            <p style="font-size:12px;">Grants the contract itself future permission to call <code>FHE.allow()</code> on these handles across transactions — the mechanism that makes gated re-granting possible.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" style="background:rgba(16,185,129,0.15);">🎯</div>
+          <div>
+            <div class="fhe-tag" style="background:rgba(16,185,129,0.2);border-color:rgba(16,185,129,0.5);color:#6ee7b7;">FHE.allow(handle, addr)</div>
+            <h4>Atomic Payment-Gated Access</h4>
+            <p style="font-size:12px;">Called inside <code>purchasePrompt</code>. Payment check and ACL grant are in the same transaction — atomicity is guaranteed by the EVM. No race condition possible.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" style="background:rgba(245,158,11,0.15);">♾️</div>
+          <div>
+            <div class="fhe-tag" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.5);color:#fcd34d;">Permanent ACL</div>
+            <h4>Irrevocable Ownership</h4>
+            <p style="font-size:12px;"><code>FHE.allow</code> cannot be undone. Buyers own access forever — even if the creator delists. Enables trustless resale semantics by design.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">04 / 08</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5 — ARCHITECTURE
+═══════════════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="grid-bg" style="opacity:0.2;"></div>
+  <div class="brand-mark">
+    <div class="logo-icon">🔐</div>
+    <div class="logo-text">PromptVault</div>
+  </div>
+
+  <div class="eyebrow" style="margin-top:60px;">Architecture</div>
+  <h2 style="margin-top:10px;">Hybrid <span class="accent">AES-256 + FHE</span> — Best of Both Worlds</h2>
+
+  <div class="hybrid-table">
+    <div class="ht-cell">
+      <div class="ht-label">Layer 1 — Content</div>
+      <div class="ht-val accent3">AES-256-GCM</div>
+      <div class="ht-sub">Encrypts prompt text (any length)</div>
+    </div>
+    <div class="ht-cell">
+      <div class="ht-label">Layer 2 — Key Gate</div>
+      <div class="ht-val accent">FHE (CoFHE)</div>
+      <div class="ht-sub">Encrypts AES key as 2 × euint128</div>
+    </div>
+    <div class="ht-cell">
+      <div class="ht-label">Content Storage</div>
+      <div class="ht-val accent2">IPFS / Pinata</div>
+      <div class="ht-sub">Ciphertext public — useless without key</div>
+    </div>
+    <div class="ht-cell">
+      <div class="ht-label">Key Storage</div>
+      <div class="ht-val gold">Sepolia Chain</div>
+      <div class="ht-sub">euint128 × 2 — never plaintext</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px; display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div class="card" style="padding:20px;">
+      <div class="eyebrow" style="font-size:10px; margin-bottom:12px;">Listing Flow (Creator)</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); line-height:2.2;">
+        <span style="color:#6ee7b7;">prompt_text</span> → AES-256-GCM → <span style="color:#67e8f9;">ciphertext</span> → IPFS<br/>
+        AES key (256b) → split → <span style="color:#c4b5fd;">key0</span> (128b) + <span style="color:#c4b5fd;">key1</span> (128b)<br/>
+        CoFHE.encrypt(key0) → <span style="color:#c4b5fd;">InEuint128</span><br/>
+        CoFHE.encrypt(key1) → <span style="color:#c4b5fd;">InEuint128</span><br/>
+        listPrompt(InEuint128 × 2, CID, price) → on-chain <span style="color:#fcd34d;">euint128 × 2</span>
+      </div>
+    </div>
+    <div class="card" style="padding:20px;">
+      <div class="eyebrow" style="font-size:10px; margin-bottom:12px;">Purchase Flow (Buyer)</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); line-height:2.2;">
+        purchasePrompt(id, value=price) → EVM tx<br/>
+        FHE.allow(<span style="color:#c4b5fd;">euint128</span>, buyer) × 2 — atomic<br/>
+        getKeyHandles(id) → <span style="color:#c4b5fd;">euint128</span> handles<br/>
+        CoFHE.decrypt(handle0, handle1) → <span style="color:#fcd34d;">k0 + k1</span><br/>
+        reconstruct → AES key → AES-GCM decrypt → <span style="color:#6ee7b7;">plaintext</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px; padding:10px 16px; background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.25); border-radius:8px; font-size:12px; color:var(--muted);">
+    <strong style="color:#c4b5fd;">Why split the key?</strong> &nbsp;FHE operates on <code>euint128</code> — max 128 bits of plaintext per handle. AES-256 requires 256 bits. Splitting into two halves is the minimal overhead to store a full AES key on-chain as FHE ciphertexts.
+  </div>
+
+  <div class="slide-num">05 / 08</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6 — HOW FHE ENABLES THE USP
+═══════════════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="glow glow-1"></div>
+  <div class="grid-bg" style="opacity:0.25;"></div>
+  <div class="brand-mark">
+    <div class="logo-icon">🔐</div>
+    <div class="logo-text">PromptVault</div>
+  </div>
+
+  <div class="eyebrow" style="margin-top:60px;">Why FHE?</div>
+  <h2 style="margin-top:10px;">FHE vs. Every <span style="color:#f87171;">Alternative</span></h2>
+
+  <div class="body">
+    <div class="compare-col">
+      <h3 style="color:#f87171;">❌ Without FHE</h3>
+
+      <div class="compare-item bad">
+        <div class="ci-icon">🏢</div>
+        <div class="ci-text">
+          <h4 class="red">Centralised Marketplace</h4>
+          <p>Platform stores prompts in plaintext. Any data breach, insider, or subpoena exposes every seller's IP.</p>
+        </div>
+      </div>
+      <div class="compare-item bad">
+        <div class="ci-icon">🤝</div>
+        <div class="ci-text">
+          <h4 class="red">Commit-Reveal Protocol</h4>
+          <p>Seller can refuse to send key, send wrong key, or collude with escrow. Trust assumption never goes away.</p>
+        </div>
+      </div>
+      <div class="compare-item bad">
+        <div class="ci-icon">🔌</div>
+        <div class="ci-text">
+          <h4 class="red">MPC / TEE Approaches</h4>
+          <p>Require honest majority among MPC nodes or trust in hardware manufacturer (Intel SGX). Off-chain complexity with on-chain pretense.</p>
+        </div>
+      </div>
+      <div class="compare-item bad">
+        <div class="ci-icon">📋</div>
+        <div class="ci-text">
+          <h4 class="red">NFT-Gated Links</h4>
+          <p>Decryption key sent to NFT holder via off-chain API. The API can be queried by anyone who reverse-engineers the call or gets the server logs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-col">
+      <h3 style="color:#6ee7b7;">✅ With FHE (PromptVault)</h3>
+
+      <div class="compare-item good">
+        <div class="ci-icon">🧮</div>
+        <div class="ci-text">
+          <h4 class="green">Contract Computes on Ciphertext</h4>
+          <p>The smart contract grants access <em>to an encrypted value</em> — it never decrypts. No plaintext key exists anywhere except buyer's browser.</p>
+        </div>
+      </div>
+      <div class="compare-item good">
+        <div class="ci-icon">⚛️</div>
+        <div class="ci-text">
+          <h4 class="green">EVM Atomicity = Perfect Atomicity</h4>
+          <p>Payment and <code>FHE.allow()</code> happen in one transaction. Either both succeed or both revert. No window for a race condition.</p>
+        </div>
+      </div>
+      <div class="compare-item good">
+        <div class="ci-icon">✍️</div>
+        <div class="ci-text">
+          <h4 class="green">ZK-Proof on Upload</h4>
+          <p><code>FHE.asEuint128(InEuint128)</code> verifies a ZK proof that the ciphertext is well-formed and was created by the caller — on-chain, no oracle needed.</p>
+        </div>
+      </div>
+      <div class="compare-item good">
+        <div class="ci-icon">🔏</div>
+        <div class="ci-text">
+          <h4 class="green">Platform Cannot Read Anything</h4>
+          <p>Even PromptVault's own deployer address cannot read a prompt. The ACL is enforced by CoFHE's cryptographic layer, not by code we wrote.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <p>
+        FHE is the <span class="highlight-quote">only approach that lets the smart contract act as an access-control authority over encrypted data without ever holding or seeing the plaintext.</span>
+        Every other model either trusts a party (seller, platform, TEE vendor) or exposes the key during transfer. PromptVault's USP is the elimination of that trust — not a reduction of it.
+      </p>
+    </div>
+  </div>
+
+  <div class="slide-num">06 / 08</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 7 — TECH STACK & METRICS
+═══════════════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="grid-bg" style="opacity:0.2;"></div>
+  <div class="brand-mark">
+    <div class="logo-icon">🔐</div>
+    <div class="logo-text">PromptVault</div>
+  </div>
+
+  <div class="eyebrow" style="margin-top:60px;">What We Built</div>
+  <h2 style="margin-top:10px;">Full Stack, <span class="accent">Shipped</span></h2>
+
+  <div class="body">
+    <div class="stack-list">
+      <div class="stack-row">
+        <div class="stack-icon">⛓️</div>
+        <div class="stack-info">
+          <h4>PromptVault.sol — Smart Contract</h4>
+          <p>Solidity 0.8.28, Hardhat, TypeChain. Deployed to Sepolia.</p>
+        </div>
+        <div class="stack-badge">Fhenix CoFHE v0.4</div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-icon">🔑</div>
+        <div class="stack-info">
+          <h4>FHE ACL System</h4>
+          <p>euint128 × 2 key storage. allowThis / allowSender / allow primitives. ZK proof validation on-chain.</p>
+        </div>
+        <div class="stack-badge">FHE.sol</div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-icon">🌐</div>
+        <div class="stack-info">
+          <h4>Next.js 14 Frontend</h4>
+          <p>App Router, Wagmi v2, Tanstack Query. Marketplace, listing, purchase, profile flows.</p>
+        </div>
+        <div class="stack-badge">Vercel deployed</div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-icon">🧠</div>
+        <div class="stack-info">
+          <h4>Browser Crypto Pipeline</h4>
+          <p>Web Crypto API (AES-256-GCM), CoFHE SDK (IndexedDB-backed), Pinata IPFS gateway.</p>
+        </div>
+        <div class="stack-badge">Zero server secrets</div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-icon">🧪</div>
+        <div class="stack-info">
+          <h4>Test Suite</h4>
+          <p>41 tests across 9 describe blocks — all validation paths, FHE ACL flows, edge cases.</p>
+        </div>
+        <div class="stack-badge">41 passing</div>
+      </div>
+    </div>
+
+    <div class="metrics-col">
+      <div class="metric-card">
+        <div class="metric-icon">🔐</div>
+        <div>
+          <div class="metric-val accent">4</div>
+          <div class="metric-label">FHE primitives used (asEuint128, allowThis, allowSender, allow)</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🔢</div>
+        <div>
+          <div class="metric-val accent2">256-bit</div>
+          <div class="metric-label">AES key gated by FHE — split into 2 × euint128 on-chain</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">⚡</div>
+        <div>
+          <div class="metric-val accent3">1 tx</div>
+          <div class="metric-label">Payment + FHE key grant — atomic, no follow-up step</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🏦</div>
+        <div>
+          <div class="metric-val gold">2.5%</div>
+          <div class="metric-label">Platform fee — 97.5% goes directly to creators, on-chain</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📦</div>
+        <div>
+          <div class="metric-val white">41</div>
+          <div class="metric-label">Automated tests — all passing on Sepolia testnet fork</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">07 / 08</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8 — CLOSING
+═══════════════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="glow glow-1"></div>
+  <div class="grid-bg" style="opacity:0.15;"></div>
+  <div class="brand-mark">
+    <div class="logo-icon">🔐</div>
+    <div class="logo-text">PromptVault</div>
+  </div>
+
+  <div class="content">
+    <div class="big-logo">🔐</div>
+    <h2>Own Your Prompts.<br/><span class="accent">Cryptographically.</span></h2>
+    <p class="sub">
+      PromptVault is the first marketplace where the platform is provably unable to read what it sells —
+      because FHE enforces access control at the cryptographic layer, not the application layer.
+    </p>
+
+    <div class="links">
+      <div class="link-item">
+        <div class="li-icon">⛓️</div>
+        <div>
+          <div style="color:var(--text); font-size:13px; font-weight:600;">Contract on Sepolia</div>
+          <div class="li-label mono">0xc369bd84...F5DA3</div>
+        </div>
+      </div>
+      <div class="link-item">
+        <div class="li-icon">🌐</div>
+        <div>
+          <div style="color:var(--text); font-size:13px; font-weight:600;">Live Frontend</div>
+          <div class="li-label">frontend-rouge-one-36.vercel.app</div>
+        </div>
+      </div>
+      <div class="link-item">
+        <div class="li-icon">🧪</div>
+        <div>
+          <div style="color:var(--text); font-size:13px; font-weight:600;">Test Suite</div>
+          <div class="li-label">41 tests passing — Hardhat</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px; padding:16px 28px; background:rgba(124,58,237,0.1); border:1px solid rgba(124,58,237,0.3); border-radius:12px; display:inline-block;">
+      <div style="font-size:13px; color:var(--muted); margin-bottom:4px;">The one-line pitch:</div>
+      <div style="font-size:18px; color:var(--text); font-weight:600; line-height:1.5;">
+        "Sell secrets — and the platform can't read them,<br/>because FHE enforces it, not us."
+      </div>
+    </div>
+
+    <div class="by">Built by <span>Harish Kotra</span> &nbsp;·&nbsp; dailybuilds.xyz &nbsp;·&nbsp; Fhenix CoFHE Hackathon 2025</div>
+  </div>
+
+  <div class="slide-num">08 / 08</div>
+</section>
+
+</body>
+</html>

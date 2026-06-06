@@ -35,7 +35,7 @@ export async function connectCofhe(
   publicClient: PublicClient<Transport, Chain>
 ) {
   const client = await getCofheClient();
-  await client.connect(publicClient, walletClient);
+  await client.connect(publicClient as any, walletClient as any);
   await client.permits.getOrCreateSelfPermit();
 }
 
